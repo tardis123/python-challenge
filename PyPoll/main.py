@@ -1,8 +1,14 @@
+# Dependencies
 import os
 import csv
 
-csvpath = os.path.join('raw_data','election_data_1.csv')
+#Ask which file should be analyzed (file must be in csv format)
+input_file = input("Enter the name of the file you want to analyze (without extension, must be csv file) : ") + ".csv"
 
+# Set file path (input file should be located on the same level as the folder raw_data)
+csvpath = os.path.join('raw_data', input_file)
+
+# Append file lines to list poll_data
 poll_data = []
 with open(csvpath, 'r', newline ='', encoding="utf-8") as csvFile:
         csvReader = csv.reader(csvFile, delimiter=',')
@@ -11,19 +17,14 @@ with open(csvpath, 'r', newline ='', encoding="utf-8") as csvFile:
         for row in csvReader:
             poll_data.append(row)
 
+# Calculate total number of votes
 total_votes = int(len(poll_data))
 print(poll_data[0])
-
-#List of candidates who received total_votes
-#Pythonic would be to use set:
-#s = set()
-#for item in poll_data:
-#    s.add(item[2])
-#print(s)
 
 #print(poll_data[3]) #grab 4th row in the csv file (header not included)
 #print(poll_data[3][2]) #grab value in the 3th column for the 4th row (header not included)
 
+# Append candidate name plus total votes per candidate to dictionary candidates
 candidates = {}
 for i in range(total_votes):
     key = poll_data[i][2]
@@ -53,7 +54,12 @@ print("-------------------------")
 # Set variable for output file
 output_file = os.path.join("election_results.csv")
 
-#  Open the output file
+#  Print output to file
+# 1) Ask what the output file should be named liked (must be csv format)
+output_file = input("Enter the name for the output file (without extension): ") + ".csv"
+# 2) set variable for output file
+output_file = os.path.join(output_file)
+#  3) Open the output file
 with open(output_file, "w", newline="") as datafile:
     writer = csv.writer(datafile)
 
