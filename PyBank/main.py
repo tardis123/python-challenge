@@ -50,7 +50,7 @@ for i in range(number_months):
 
 #Print output to terminal
 print("Financial Analysis")
-print("----------------------------")
+print("-" * 28)
 print("Total Months: {}".format(number_months))
 print("Total Revenue: ${}".format(total_revenue))
 print("Average Revenue Change: ${}".format(average_revenue))
@@ -68,7 +68,7 @@ with open(output_file, "w", newline="") as datafile:
 
     # Write rows
     writer.writerow(["Financial Analysis"])
-    writer.writerow(["----------------------------"])
+    writer.writerow(["-" * 28])
     writer.writerow(["Total Months: {}".format(number_months)])
     writer.writerow(["Total Revenue: ${}".format(total_revenue)])
     writer.writerow(["Average Revenue Change: ${}".format(average_revenue)])

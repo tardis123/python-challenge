@@ -35,6 +35,7 @@ with open(csvpath, 'r', newline ='', encoding="utf-8") as csvFile:
             employee_data.append(row)
 
 #Create a list per element (column)
+lst_empId = []
 lst_firstname =[]
 lst_lastname = []
 lst_DOB = []
@@ -43,6 +44,7 @@ lst_State = []
 
 # Convert each element to the required format
 for item in employee_data:
+    EmpId = item[0]
     fullname = item[1]
     # split method breaks up a string at the specified separator and returns a list of strings
     # strip method removes leading and trailing characters
@@ -55,6 +57,7 @@ for item in employee_data:
         if item[4] == key:
             State = value
     # Append converted data to corresponding list
+    lst_empId.append(EmpId)
     lst_firstname.append(firstname)
     lst_lastname.append(lastname)
     lst_DOB.append(DOB)
@@ -62,7 +65,7 @@ for item in employee_data:
     lst_State.append(State)
 
 # Zip lists
-cleaned_employee_list = zip(lst_firstname, lst_lastname, lst_DOB, lst_SSN, lst_State)
+cleaned_employee_list = zip(lst_empId, lst_firstname, lst_lastname, lst_DOB, lst_SSN, lst_State)
 
 # Print output to file
 # 1) Ask what the output file should be named liked (must be csv format)
@@ -74,7 +77,7 @@ with open(output_file, "w", newline="") as datafile:
     writer = csv.writer(datafile)
 
     # Write the header row
-    writer.writerow(["Emp ID, First Name, Last Name, DOB, SSN, State"])
+    writer.writerow(["Emp ID", "First Name", "Last Name", "DOB", "SSN", "State"])
 
     # Write in zipped rows
     writer.writerows(cleaned_employee_list)

@@ -19,7 +19,6 @@ with open(csvpath, 'r', newline ='', encoding="utf-8") as csvFile:
 
 # Calculate total number of votes
 total_votes = int(len(poll_data))
-print(poll_data[0])
 
 #print(poll_data[3]) #grab 4th row in the csv file (header not included)
 #print(poll_data[3][2]) #grab value in the 3th column for the 4th row (header not included)
@@ -33,23 +32,27 @@ for i in range(total_votes):
     else:
         candidates[key] += 1
 
+def winner():
+    top_vote = 0
+    winner = ""
+    for key, value in candidates.items():
+        if value > top_vote:
+            top_vote = value
+            winner = key
+    return winner
+
 #Print output to terminal
 print("Election Results")
-print("-------------------------")
+print("-" * 25)
 print("Total Votes: {}".format(total_votes))
-print("-------------------------")
+print("-" * 25)
 relative_votes = 0
-top_vote = 0
-winner = ""
 for key, value in candidates.items():
     relative_votes = "{:.2%}".format(float(value/total_votes))
     print("{}: {} ({})".format(key, relative_votes, value))
-    if value > top_vote:
-        top_vote = value
-        winner = key
-print("-------------------------")
-print("Winner: {}".format(winner) )
-print("-------------------------")
+print("-" * 25)
+print("Winner: {}".format(winner()) )
+print("-" * 25)
 
 # Set variable for output file
 output_file = os.path.join("election_results.csv")
@@ -65,15 +68,14 @@ with open(output_file, "w", newline="") as datafile:
 
     # Write the header row
     writer.writerow(["Election Results"])
-    writer.writerow(["-------------------------"])
+    writer.writerow(["-" * 25])
     writer.writerow(["Total Votes: {}".format(total_votes)])
-    writer.writerow(["-------------------------"])
+    writer.writerow(["-" * 25])
     relative_votes = 0
-    top_vote = 0
     for key, value in candidates.items():
+        # Relative number of votes in two digits
         relative_votes = "{:.2%}".format(float(value/total_votes))
         writer.writerow(["{}: {} ({})".format(key, relative_votes, value)])
-    writer.writerow([""])
-    writer.writerow(["-------------------------"])
-    writer.writerow(["Winner: {}".format(winner)])
-    writer.writerow(["-------------------------"])
+    writer.writerow(["-" * 25])
+    writer.writerow(["Winner: {}".format(winner())])
+    writer.writerow(["-" * 25])
